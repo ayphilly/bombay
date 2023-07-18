@@ -9,17 +9,17 @@ export const choices = ['rock', 'paper', 'scissors'];
 export const positions:betModel[] = [
     {
         name:'Rock',
-        amount:500,
+        amount:singleBetAmount,
         stroke:'!border-[#257FE9]'
     },
     {
         name:'Paper',
-        amount:500,
+        amount:singleBetAmount,
         stroke:'!border-[#16C359]'
     },
     {
         name:'Scissors',
-        amount:500,
+        amount:singleBetAmount,
         stroke:'!border-[#E31542]'
     }
 ]
