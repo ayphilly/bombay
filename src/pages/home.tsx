@@ -1,10 +1,10 @@
 import React from "react";
 import { Topbar } from "../containers/topbar";
 import { Platformbutton } from "../components/buttons";
-import { Allgames } from "../containers/game";
+import { Allpositions } from "../containers/positions";
 import { gameModel } from "../helpers/models";
 import { notifErr } from "../helpers/helpers";
-import { bet, games, rules, winOne, winTwo } from "../helpers/data";
+import { singleBetAmount, positions, rules, betPositionOne, betPositionTwo } from "../helpers/data";
 import { Board } from "../containers/board";
 import { Column } from "../components/gamecomp";
 import { joinArray } from "../helpers/utils";
@@ -23,7 +23,7 @@ export const Home = ()=> {
         var isActive = game.active.filter(item => item === name)[0]
 
         // check if user has enough in balance
-        if (game.balance < bet){
+        if (game.balance < singleBetAmount){
             return  notifErr('You have less than the amount required', 'Place Bet')
         }
         // checks if option hasn't been selected previously 
@@ -32,8 +32,8 @@ export const Home = ()=> {
             if (game.active.length < 2) {
                 setGame(prevState => ({
                     ...prevState,
-                    balance:prevState.balance-bet,
-                    bet:prevState.bet + bet,
+                    balance:prevState.balance-singleBetAmount,
+                    bet:prevState.bet + singleBetAmount,
                     active: [...prevState.active, name]
                   }))
             } else {
@@ -44,8 +44,8 @@ export const Home = ()=> {
             var newArr = game.active.filter(item => item !== name)
             setGame(prevState => ({
                 ...prevState,
-                balance:prevState.balance + bet,
-                bet:prevState.bet - bet,
+                balance:prevState.balance + singleBetAmount,
+                bet:prevState.bet - singleBetAmount,
                 active: newArr
               }))
         }
@@ -88,7 +88,7 @@ export const Home = ()=> {
         //  check if player won
         else if (playerWins) {
             // calculate winnings based on number of positions
-            const winnings = playerOptions.length > 1 ? winTwo * game.bet : winOne * game.bet;
+            const winnings = playerOptions.length > 1 ? betPositionTwo * game.bet : betPositionOne * game.bet;
             setResult(joinArray(playerOptions) + ` won`);
             
             setGame((prevState) => ({
@@ -107,7 +107,7 @@ export const Home = ()=> {
     // controlls what happen when user clicks on Play
     const handlePlay = () => {
         // generates a random choice
-        const compRandom = games[Math.floor(Math.random() * games.length)]?.name;
+        const compRandom = positions[Math.floor(Math.random() * positions.length)]?.name;
        
         // sets the computer choice state
         setCompChoice(compRandom.toLocaleLowerCase());
@@ -136,7 +136,7 @@ export const Home = ()=> {
                 <span className="w-full flex flex-col items-center gap-[50px]">
                     <Column>
                         {game.active.length < 1 && <p className="my-0 text-[1.2em] text-cream uppercase mb-[20px] ">Pick your positions</p>}
-                        <Allgames result={result.toLocaleLowerCase()} computer={compChoice} active={game.active} click={handlePick} />
+                        <Allpositions result={result.toLocaleLowerCase()} computer={compChoice} active={game.active} click={handlePick} />
                     </Column>
                    
                     {!result ? <Platformbutton name= "Play" click={handlePlay} disabled={compChoice || game.active.length <1 ? true:false} />

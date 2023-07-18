@@ -23,7 +23,7 @@ export interface gameModel {
     active:string[];
 }
 
-export interface allGameModel {
+export interface allPositionsModel {
     active:string[];
     result:string;
     computer?:string;
@@ -37,7 +37,7 @@ export interface boardModel {
     win:number
 }
 
-export interface singleOptModel extends allGameModel {
+export interface SinglepositionModel extends allPositionsModel {
     data:betModel;
     active:string[];
     result:string;

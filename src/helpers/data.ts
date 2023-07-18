@@ -1,12 +1,12 @@
 import { betModel, rulesModel } from "./models"
 
-export const bet = 500
-export const winOne = 14;
-export const winTwo= 3
+export const singleBetAmount = 500
+export const betPositionOne = 14;
+export const betPositionTwo= 3
 
 export const choices = ['rock', 'paper', 'scissors'];
 
-export const games:betModel[] = [
+export const positions:betModel[] = [
     {
         name:'Rock',
         amount:500,

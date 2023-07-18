@@ -1,7 +1,7 @@
-import { singleOptModel } from "../helpers/models"
+import { SinglepositionModel } from "../helpers/models"
 import { getColor, getTColor } from "../helpers/utils"
 
-export const Singleoption = ({data,computer,result, active, click}:singleOptModel)=> {
+export const Singleposition = ({data,computer,result, active, click}:SinglepositionModel)=> {
     const handleClick = () => {
         click();
     };
