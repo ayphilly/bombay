@@ -3,6 +3,7 @@ import { betModel, rulesModel } from "./models"
 export const singleBetAmount = 500
 export const betPositionOne = 14;
 export const betPositionTwo= 3
+export const maxPositions = 2
 
 export const choices = ['rock', 'paper', 'scissors'];
 

@@ -4,7 +4,7 @@ import { Platformbutton } from "../components/buttons";
 import { Allpositions } from "../containers/positions";
 import { gameModel } from "../helpers/models";
 import { notifErr } from "../helpers/helpers";
-import { singleBetAmount, positions, rules, betPositionOne, betPositionTwo } from "../helpers/data";
+import { singleBetAmount, positions, rules, betPositionOne, betPositionTwo, maxPositions } from "../helpers/data";
 import { Board } from "../containers/board";
 import { Column } from "../components/gamecomp";
 import { joinArray } from "../helpers/utils";
@@ -58,6 +58,7 @@ export const Home = ()=> {
 
         let playerWins = false;
         let isTie = false;
+        let winPosition =''
         
         // loops thru the array of playerchoices
         for (let i = 0; i < playerChoices.length; i++) {
@@ -69,8 +70,19 @@ export const Home = ()=> {
             // compare winning choice to know if its a win or tie for a player
             if (winningChoice === computerChoice) {
                 playerWins = true;
+                winPosition = currentPlayerChoice
                 break;
-            } else if (currentPlayerChoice === computerChoice) {
+            } 
+            // check if its a tie for double positions
+            // for double bet positions only tie if the last bet position equals computer position
+            // paper vs paper, scissors user wins because paper vs paper ties but the last position (Scissors) 
+            // conquers Computer Paper
+            else if (currentPlayerChoice === computerChoice && (i === 1)) {
+                isTie = true;
+                break;
+            } 
+            // check for a tie for single position
+            else if (currentPlayerChoice === computerChoice && (playerChoices.length ===1 && i === 0)) {
                 isTie = true;
                 break;
             }
@@ -89,7 +101,8 @@ export const Home = ()=> {
         else if (playerWins) {
             // calculate winnings based on number of positions
             const winnings = playerOptions.length > 1 ? betPositionTwo * game.bet : betPositionOne * game.bet;
-            setResult(joinArray(playerOptions) + ` won`);
+            // setResult(joinArray(playerOptions) + ` won`);
+            setResult(winPosition + ' Won')
             
             setGame((prevState) => ({
                 ...prevState, balance: prevState.balance + winnings, currWin:winnings, win: prevState.win + winnings,
